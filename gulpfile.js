@@ -81,6 +81,11 @@ const imgBuild = () => {
     .pipe(imagemin())
     .pipe(dest('./build/img/'))
 }
+// Fonts dev
+const fonts = () => {
+  return src('./src/fonts/**/*')
+    .pipe(dest('./app/fonts/'))
+}
 // FONTS build
 const fontsBuild = () => {
   return src('./app/fonts/**/*')
@@ -147,6 +152,6 @@ const watchFiles = () => {
   watch('./src/js/**/*.js', scripts);
 }
 // default task
-exports.default = series(clean, parallel(pages, scripts, imgToApp),  styles, watchFiles); // GULP start
+exports.default = series(clean, parallel(pages, fonts, scripts, imgToApp), styles, watchFiles); // GULP start
 exports.build = parallel(pagesBuild, stylesBuild, imgBuild, fontsBuild, scriptsBuild); // GULP build
 exports.zipBuild = zipBuild; // GULP zip build project
