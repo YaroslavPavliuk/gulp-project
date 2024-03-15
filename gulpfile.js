@@ -14,6 +14,8 @@ const webpCSS = require('gulp-webp-css');
 // IMG
 const imagemin = require('gulp-imagemin');
 const webp = require('gulp-webp');
+// FONTS
+const ttf2woff2 = require('gulp-ttf2woff2');
 // JS
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
@@ -83,7 +85,8 @@ const imgBuild = () => {
 }
 // Fonts dev
 const fonts = () => {
-  return src('./src/fonts/**/*')
+  return src('./src/fonts/**/*.ttf')
+    .pipe(ttf2woff2())
     .pipe(dest('./app/fonts/'))
 }
 // FONTS build
@@ -152,6 +155,6 @@ const watchFiles = () => {
   watch('./src/js/**/*.js', scripts);
 }
 // default task
-exports.default = series(clean, parallel(pages, fonts, scripts, imgToApp), styles, watchFiles); // GULP start
+exports.default = series(clean, parallel(pages, scripts, fonts, imgToApp), styles, watchFiles); // GULP start
 exports.build = parallel(pagesBuild, stylesBuild, imgBuild, fontsBuild, scriptsBuild); // GULP build
 exports.zipBuild = zipBuild; // GULP zip build project
