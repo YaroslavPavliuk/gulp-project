@@ -11,9 +11,6 @@ const maps = require('gulp-sourcemaps');
 const cleanCSS = require('gulp-cleaner-css');
 const sassGlob = require('gulp-sass-glob');
 const webpCSS = require('gulp-webp-css');
-// fonts
-const ttf2woff = require('gulp-ttf2woff');
-const ttf2woff2 = require('gulp-ttf2woff2');
 // IMG
 const imagemin = require('gulp-imagemin');
 const webp = require('gulp-webp');
@@ -84,41 +81,6 @@ const imgBuild = () => {
     .pipe(imagemin())
     .pipe(dest('./build/img/'))
 }
-// FONTS dev
-const fonts = () => {
-  src('./src/fonts/**/*.ttf')
-    .pipe(ttf2woff())
-    .pipe(dest('./app/fonts/'))
-  return src('./src/fonts/**/*.ttf')
-    .pipe(ttf2woff2())
-    .pipe(dest('./app/fonts/'))
-}
-// fontsStyle
-const cb = () => {}
-
-let srcFonts = './src/scss/_fonts.scss';
-let appFonts = './app/fonts';
-
-const fontsStyle = (done) => {
-  let file_content = fs.readFileSync(srcFonts);
-  
-  fs.writeFile(srcFonts, '', cb)
-  fs.readdir(appFonts, function (err, items){
-    if (items) {
-      let c_fontname;
-      for (var i=0; i < items.length; i++) {
-        let fontname = items[i].split('.');
-        fontname = fontname[0];
-        if (c_fontname != fontname) {
-          fs.appendFile(srcFonts, '@include font-face("' + fontname +'", "' + fontname +'", 400);\r\n', cb)
-        }
-        c_fontname = fontname;
-      }
-    }
-  })
-
-  done();
-}
 // FONTS build
 const fontsBuild = () => {
   return src('./app/fonts/**/*')
@@ -181,12 +143,10 @@ const watchFiles = () => {
   });
   watch('./src/scss/**/*.scss', styles);
   watch('./src/**/*.html', pages);
-  watch('./src/img/**/*.*', imgToApp);  
-  watch('./src/fonts/**/*.*', fonts);  
-  watch('./src/fonts/**/*.*', fontsStyle);
+  watch('./src/img/**/*.*', imgToApp);
   watch('./src/js/**/*.js', scripts);
 }
 // default task
-exports.default = series(clean, parallel(pages, scripts, fonts, imgToApp), fontsStyle, styles, watchFiles); // GULP start
+exports.default = series(clean, parallel(pages, scripts, imgToApp),  styles, watchFiles); // GULP start
 exports.build = parallel(pagesBuild, stylesBuild, imgBuild, fontsBuild, scriptsBuild); // GULP build
 exports.zipBuild = zipBuild; // GULP zip build project
