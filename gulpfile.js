@@ -102,7 +102,7 @@ const convertFonts = () => {
 }
 
 const stylesFonts = () => {
-	let fontsFile = `${srcFolder}/scss/_fonts.scss`;
+	let fontsFile = `${srcFolder}/scss/base/_fonts.scss`;
 
 	fs.readdir(`${destFolder}/fonts/`, function (err, fontsFiles) {
 		if (fontsFiles) {
@@ -150,7 +150,7 @@ const stylesFonts = () => {
 				}
 		}
 	});
-  return src('./src')
+  return src('./src/scss/base')
 	function cb() {}
 };
 // FONTS build
