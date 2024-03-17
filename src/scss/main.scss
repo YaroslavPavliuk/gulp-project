@@ -1,7 +1,9 @@
+/* Base */
 @import "./base/reset";
 @import "./base/vars";
 @import "./base/base";
 @import "./base/fonts";
-
+/* Mixin and Blocks */
 @import "./mixins/*.scss";
-@import "./block/*.scss"
+@import "./block/*.scss";
+/* No styles code below. Only in modules */

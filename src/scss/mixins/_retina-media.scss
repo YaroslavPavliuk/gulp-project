@@ -1,0 +1,9 @@
+@mixin retina-bg($image){
+  @media 
+  (-webkit-min-device-pixel-rati0: 2),
+  (min-resolution: 192dpi){
+    background-image: $image;
+  }
+}
+
+/*  @include retina-bg(url('./../img/header/header-bg@2x.jpg')); */
