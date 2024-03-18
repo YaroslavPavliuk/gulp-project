@@ -25,6 +25,7 @@ const uglify = require('gulp-uglify-es').default;
 const fs = require('fs'); 
 const del = require('del');
 const rename = require('gulp-rename');
+const cached = require('gulp-cached');
 const zip = require('gulp-zip');
 // HTML dev
 const pages = () => {
@@ -46,6 +47,7 @@ const pagesBuild = () => {
 // SCSS dev
 const styles = () =>{
   return src('./src/scss/**/*.scss')
+    .pipe(cached('styles'))
     .pipe(maps.init())
     .pipe(sassGlob())
     .pipe(scss({
@@ -182,6 +184,7 @@ const scripts = () => {
         ]
       }
     }))
+    .pipe(cached('scripts'))
     .pipe(maps.init())
     .pipe(uglify())
     .pipe(rename({
