@@ -210,7 +210,7 @@ const zip = () => {
   const zipName = `${folderName}.zip`;
   return src(`build/**/*`)
      .pipe(zipBuild(zipName))
-     .pipe(dest('./'));
+     .pipe(dest('build/'));
  }
 // WATCHING
 const watchFiles = () => {
