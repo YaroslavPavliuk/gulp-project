@@ -23,10 +23,11 @@ const webpackStream = require('webpack-stream');
 const uglify = require('gulp-uglify-es').default;
 // all
 const fs = require('fs'); 
+const path = require('path');
 const del = require('del');
 const rename = require('gulp-rename');
 const cached = require('gulp-cached');
-const zip = require('gulp-zip');
+const zipBuild = require('gulp-zip');
 // HTML dev
 const pages = () => {
   return src(['./src/index.html'])
@@ -204,9 +205,11 @@ const clean = () => {
   return del(['app/*'])
 }
 // ZIP build project
-const zipBuild = () => {
+const zip = () => {
+  const folderName = path.basename(process.cwd());
+  const zipName = `${folderName}.zip`;
   return src(`build/**/*`)
-     .pipe(zip('build.zip'))
+     .pipe(zipBuild(zipName))
      .pipe(dest('./'));
  }
 // WATCHING
@@ -224,4 +227,4 @@ const watchFiles = () => {
 // default task
 exports.default = series(clean, parallel(pages, scripts, convertFonts, imgToApp),stylesFonts, styles, watchFiles); // GULP start
 exports.build = parallel(pagesBuild, stylesBuild, imgBuild, fontsBuild, scriptsBuild); // GULP build
-exports.zipBuild = zipBuild; // GULP zip build project
+exports.zip = zip; // GULP zip build project
