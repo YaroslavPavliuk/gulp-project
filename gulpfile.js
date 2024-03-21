@@ -99,7 +99,7 @@ const convertFonts = () => {
     })
   )
   .pipe(dest('./src/fonts/'))
-  .pipe(src('./src/fonts/*.ttf'))
+  .pipe(src(['./src/fonts/*.ttf', './src/fonts/*.woff']))
   .pipe(ttf2woff2())
   .pipe(dest('./app/fonts'))
 }
