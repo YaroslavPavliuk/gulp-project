@@ -18,8 +18,8 @@ const webp = require('gulp-webp');
 const ttf2woff2 = require('gulp-ttf2woff2');
 const fonter = require('gulp-fonter-fix');
 // JS
-const webpack = require('webpack');
-const webpackStream = require('webpack-stream');
+const webpack = require('webpack-stream');
+const babel = require('gulp-babel');
 const uglify = require('gulp-uglify-es').default;
 // all
 const fs = require('fs'); 
@@ -30,7 +30,7 @@ const cached = require('gulp-cached');
 const zipBuild = require('gulp-zip');
 // HTML dev
 const pages = () => {
-  return src(['./src/index.html'])
+  return src(['./src/**/*.html'])
     .pipe(fileInclude({
       prefix: '@',
       basepath: '@file'
@@ -163,35 +163,14 @@ const fontsBuild = () => {
 }
 // JS dev
 const scripts = () => {
-  return src('./src/js/main.js')
-    .pipe(webpackStream({
-      output: {
-        filename: 'main.js',
-      },
-      module: {
-        rules: [
-          {
-            test: /\.(?:js|mjs|cjs)$/,
-            exclude: /node_modules/,
-            use: {
-              loader: 'babel-loader',
-              options: {
-                presets: [
-                  ['@babel/preset-env', { targets: "defaults" }]
-                ]
-              }
-            }
-          }
-        ]
-      }
-    }))
+  return src('./src/js/*.js')
+    .pipe(babel())
+    .pipe(webpack(require('./webpack.config.js')))
     .pipe(cached('scripts'))
-    .pipe(maps.init())
     .pipe(uglify())
     .pipe(rename({
       suffix: '.min'
     }))
-    .pipe(maps.write('.'))
     .pipe(dest('./app/js'))
     .pipe(browserSync.stream());
 }
