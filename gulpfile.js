@@ -28,6 +28,7 @@ const del = require('del');
 const rename = require('gulp-rename');
 const cached = require('gulp-cached');
 const zipBuild = require('gulp-zip');
+const replace = require('gulp-replace');
 // HTML dev
 const pages = () => {
   return src(['./src/**/*.html'])
@@ -35,6 +36,12 @@ const pages = () => {
       prefix: '@',
       basepath: '@file'
     }))
+    .pipe(
+			replace(
+				/(?<=src=|href=|srcset=)(['"])(\.(\.)?\/)*(img|images|fonts|css|scss|sass|js|files|audio|video)(\/[^\/'"]+(\/))?([^'"]*)\1/gi,
+				'$1./$4$5$7$1'
+			)
+		)
     .pipe(dest('./app'))
     .pipe(browserSync.stream());
 }
@@ -63,6 +70,12 @@ const styles = () =>{
     .pipe(cleanCSS({
       level: 2
     }))
+    .pipe(
+			replace(
+				/(['"]?)(\.\.\/)+(img|images|fonts|css|scss|sass|js|files|audio|video)(\/[^\/'"]+(\/))?([^'"]*)\1/gi,
+				'$1$2$3$4$6$1'
+			)
+		)
     .pipe(maps.write('.'))
     .pipe(dest('./app/css/'))
     .pipe(browserSync.stream());
