@@ -31,7 +31,7 @@ const zipBuild = require('gulp-zip');
 const replace = require('gulp-replace');
 // HTML dev
 const pages = () => {
-  return src(['./src/**/*.html'])
+  return src(['./src/*.html'])
     .pipe(fileInclude({
       prefix: '@',
       basepath: '@file'
@@ -54,7 +54,7 @@ const pagesBuild = () => {
 }
 // SCSS dev
 const styles = () =>{
-  return src('./src/scss/**/*.scss')
+  return src('./src/scss/*.scss')
     .pipe(cached('styles'))
     .pipe(maps.init())
     .pipe(sassGlob())
