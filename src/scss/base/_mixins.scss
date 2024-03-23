@@ -1,0 +1,27 @@
+@mixin font-face($font-family, $url, $weight, $style) {
+  @font-face {
+    font-family: "#{$font-family}";
+    src: url('../fonts/#{$url}.woff2') format("woff2");
+    font-weight: #{$weight};
+    font-display: swap;
+    font-style: $style;
+  }
+}
+
+@mixin mediaBg() {
+	@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+	    @content;
+    }
+}
+
+@mixin tablet () {
+    @media (max-width: 1220px) {
+		@content;
+	}
+}
+
+@mixin mobile () {
+    @media (max-width: 820px) {
+		@content;
+	}
+}
