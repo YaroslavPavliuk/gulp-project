@@ -1,0 +1,62 @@
+{
+	/* Media Tablet */
+	"mediaTablet": {
+		"scope": "css,scss",
+		"prefix": "tablet",
+		"body": ["@include tablet {", "    ${1}", "}"],
+		"description": "tablet"
+	},
+
+	/* Media Mobile */
+	"mediaMobile": {
+		"scope": "css,scss",
+		"prefix": "mobile",
+		"body": ["@include mobile {", "    ${1}", "}"],
+		"description": "mobile"
+	},
+
+	/* CSS, SCSS snippets */
+	"bgimg: Background image": {
+		"scope": "css,scss",
+		"prefix": "bgimg",
+		"body": [
+			"background-color: #999;",
+			"background-image: url('./..${1:/}');",
+			"background-position: center center; /* x y */",
+			"background-size: cover;",
+			"background-repeat: no-repeat;",
+			"$2"
+		],
+		"description": "bgimg: Background image"
+	},
+	"bgicon: Background icon": {
+		"scope": "css,scss",
+		"prefix": "bgicon",
+		"body": [
+			"background-image: url('./..${1:/}');",
+			"background-position: 20px 10px; /* x y */",
+			"background-size: auto;",
+			"background-repeat: no-repeat;",
+			"$2"
+		],
+		"description": "bgicon: Background icon"
+	},
+	"CSS BG retina": {
+		"prefix": "mediaBg",
+		"body": [
+			"@include mediaBg() {",
+			"	background-image: url('./../img/${1:example}@2x.${2:jpg}');",
+			"}"
+		],
+		"description": "CSS BG retina"
+	},
+	"CSS img set": {
+		"prefix": "imgSet",
+		"body": [
+			"background-image: image-set(",
+			"	url('./../img/${1:example}') 1x,",
+			"	url('./../img/${1:example}') 2x);"
+		],
+		"description": "CSS img set"
+	}
+}
